@@ -1,0 +1,64 @@
+# This program assumes a maximum integer size of 32 bits
+# While this is not necessary in python, this program was written as a learning exercise
+
+from math import floor
+
+# Get first number to be multiplied
+# The number will be stored as a string as it will be larger than 32 bits
+firstNumString = input('Provide first number to by multiplied: ')
+
+# Get second number to be multiplied
+# The number will be stored as a string as it will be larger than 32 bits
+secondNumString = input('Provide second number to by multiplied: ')
+
+# This function turns a number string into a list
+def numStringToList (numString):
+	numList = []
+	# This populates the numList by taking each number in the string and appending it to the list
+	for num in numString:
+		numList.append(int(num))
+	# The items in the list are reversed so index 0 is the least significant digit in the number
+	# numList = numList.reverse()
+	return numList
+
+def main ():
+	firstNumList = numStringToList(firstNumString[::-1])
+	# print(firstNumList)
+	secondNumList = numStringToList(secondNumString)
+	# print(secondNumList)
+	resultsList = []
+	finalResultList = []
+	while secondNumList:
+		multiplier = secondNumList.pop()
+		# print(multiplier)
+		numZeros = 0
+		carryover = 0
+		result = []
+		for i in range(numZeros):
+			result.append(0)
+		for i in firstNumList:
+			interimResult = (multiplier * firstNumList[i])
+			result.append((interimResult + carryover) % 10)
+			carryover = floor((interimResult + carryover) / 10)
+			numZeros += 1
+		resultsList.append(result)
+	print(resultsList)
+	maxIndex = max(len(i) - 1 for i in resultsList)
+	print(maxIndex)
+	index = 0
+	while index <= maxIndex:
+		print(index)
+		caryover = 0
+		sumIndex = 0
+		for i in resultsList:
+			print(i)
+			sumIndex += i.pop(index)
+		index += 1
+		finalResultList.append((sumIndex + carryover) % 10)
+		carryover = floor((sumIndex + carryover) / 10)
+	finalResult = ''
+	for i in finalResultList:
+		finalResult += str(finalResultList[i])
+	print(finalResult)
+
+main()
